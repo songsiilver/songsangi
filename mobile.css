@@ -1,0 +1,72 @@
+/* Keep the supplied design while preserving readable, touch-friendly layouts. */
+[hidden]{display:none!important}
+html{color-scheme:light;scroll-padding-top:16px}
+body{-webkit-text-size-adjust:100%;line-height:1.5}
+button,a,input,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+input,button,textarea{font:inherit}
+.privacy-banner{display:flex;align-items:center;justify-content:center;gap:7px;background:#eaf4ee;color:#426b58;padding:10px 14px;font-size:12px;font-weight:650}
+.privacy-banner svg{width:15px;height:15px;flex-shrink:0}
+.creator-line{font-size:13px;color:#687e71;margin:14px 0 0}
+.creator-line a{text-decoration:none;margin-left:5px;color:#3f6c57}
+.creator-line strong{margin-right:5px}
+.input-hint,.card-desc,.loan-desc,.summary-caption,.summary-note,.allocation-description,.allocation-footer,.projection-disclaimer,.footer-caption,.section-intro,.section-side-note,.action-note,.future-components span,.summary-metric p{color:#687d70!important}
+.salary-field:has([aria-invalid=true]){border-color:#bd6f5c}
+.error-message{color:#a23b2d;font-size:12px;line-height:1.75;margin:9px 0 0;word-break:keep-all}
+.example-badge{display:inline-block;background:#deeee3;border-radius:4px;padding:1px 6px;font-size:10px;margin-right:3px;color:#426b58}
+.summary-card{justify-content:flex-start}
+#summaryValues{display:flex;flex-direction:column;flex:1;min-width:0}
+.ring-area{flex:1;width:100%;min-width:0}
+.summary-metric{min-width:0}
+.summary-metric .metric-value,.allocation-amount,.future-total{white-space:normal;overflow-wrap:anywhere}
+.metric-value small,.allocation-amount small,.future-total small{display:inline-block;white-space:nowrap}
+.allocation-card,.future-amount-area,.future-copy,.future-components>div{min-width:0}
+.future-components strong{overflow-wrap:anywhere}
+.summary-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;flex:1;min-height:250px;color:#63796a}
+.summary-empty>span{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:#e7f1e8;color:#86a491;font-size:30px}
+.summary-empty p{margin:0;font-size:13px;line-height:1.8}
+.rounding-note{color:#687d70;font-size:11px;line-height:1.8;margin:16px 0 0}
+.term-switch{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));width:min(100%,340px)}
+.term-btn{min-width:0;min-height:44px;padding:5px 7px}
+.switch{min-width:47px;min-height:44px;align-items:center}
+.switch-track{position:relative}
+.switch input{inset:0}
+.reset-btn,.copy-btn{min-height:44px}
+.how-it-works{padding-top:7px;padding-bottom:7px}
+.how-it-works summary{min-height:44px}
+.year-overview{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:15px}
+.year-point{border:1px solid var(--line);background:white;border-radius:12px;min-width:0;padding:14px 13px}
+.year-point.selected{border-color:#a5cfba;background:#f1f9f3}
+.year-point>span{font-size:11px;color:#728676;display:block}
+.year-point>strong{display:block;overflow-wrap:anywhere;font-size:18px;margin-top:5px;color:#294e3a;font-variant-numeric:tabular-nums}
+.year-point small{font-size:10px;margin-left:3px;display:inline-block;font-weight:600}
+.copy-btn:disabled{opacity:.5;cursor:default}
+.copy-fallback{background:white;padding:17px;border:1px solid var(--line);border-radius:12px}
+.copy-fallback label{display:block;font-size:12px;margin-bottom:10px;color:#607b68}
+.copy-fallback textarea{width:100%;max-width:100%;resize:vertical;border:1px solid #d6e5d9;border-radius:8px;padding:12px;font-size:16px;line-height:1.7;color:#294e3a;background:#fbfdfb}
+@media(max-width:820px){.future-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.year-overview{gap:8px}.year-point{padding:12px 9px}.year-point>strong{font-size:16px}}
+@media(max-width:560px){
+  .brand{gap:8px}.brand-name{font-size:15px}.brand-tag{font-size:8px}.brand-mark{width:34px;height:34px}
+  .header-inner{gap:10px;min-height:69px}.privacy-banner{font-size:10px;padding:10px 11px;gap:5px}
+  .hero{padding-top:35px}.hero h1{font-size:clamp(29px,7.8vw,40px)}.creator-line{font-size:11px;margin-top:12px}
+  .hero-sub br{display:none}.hero-sub{font-size:13px}.hero-sub{max-width:100%;word-break:keep-all}
+  .salary-field input{font-size:31px}.loan-field input{font-size:25px}.preset{min-height:44px}
+  .summary-card{padding:23px 19px}.ring-area{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px}
+  .ring{width:min(100%,150px);height:auto;aspect-ratio:1;padding:19px}
+  .ring-center{width:100%;height:100%;aspect-ratio:1;min-width:0}.ring-center strong{font-size:27px}.ring-center small{font-size:9px}
+  .summary-metric .metric-value{font-size:31px}.summary-metric .metric-value small{font-size:14px}
+  .lower-section{margin-top:48px}.section-heading h2{font-size:24px}.allocation-percent{color:#687d70}
+  .allocation-card{padding:17px 14px 15px}.allocation-amount{font-size:27px}
+  .future-card{padding:22px 18px}.future-total{font-size:38px}.future-amount-area{padding:22px 18px}
+  .future-components{gap:12px}.future-components strong{font-size:15px}
+  .year-overview{grid-template-columns:1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white}
+  .year-point{border:0;border-radius:0;border-bottom:1px solid #edf1ed;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 17px}
+  .year-point:last-child{border-bottom:0}.year-point>span{font-size:12px;flex-shrink:0}.year-point>strong{font-size:16px;margin:0;text-align:right}.year-point small{font-size:11px}
+  .footer-caption{font-size:11px}
+}
+@media(max-width:360px){
+  .shell{width:calc(100% - 28px)}.header-inner{gap:7px}.brand{gap:6px}.brand-mark{width:31px;height:31px;font-size:17px}.brand-name{font-size:14px}
+  .hero h1{font-size:29px}.hero-sub{font-size:12px}.creator-line{font-size:10px}
+  .input-card,.summary-card{padding-left:17px;padding-right:17px}.ring-area{gap:12px}.ring{padding:16px}.ring-center strong{font-size:23px}.ring-center small{font-size:8px}
+  .summary-metric .metric-value{font-size:27px}.summary-metric .metric-label{font-size:11px}.allocation-amount{font-size:25px}.allocation-amount small{font-size:12px}
+  .allocation-description{font-size:11px}.allocation-description br{display:none}.allocation-footer{font-size:9px}.future-total{font-size:34px}
+}

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8faf9">
+  <meta name="description" content="월급을 저축·비상금·문화비·생활비로 나누고 5년 뒤 모일 원금을 계산하는 송산기 월급 관리 계산기">
+  <title>월급 관리 금액별 자동 계산기 | 송산기</title>
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="월급 관리 금액별 자동 계산기 | 송산기">
+  <meta property="og:description" content="송산기와 함께 월급을 나누고 1~5년 뒤 모을 원금을 확인하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css?v=2">
+  <link rel="stylesheet" href="./mobile.css?v=2">
+  <link rel="stylesheet" href="./manual.css?v=4">
+</head>
+<body>
+<div class="privacy-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></svg><span>입력한 월급·대출 정보는 저장되지 않습니다.</span></div>
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="#top" aria-label="송산기 월급 관리 계산기 맨 위로">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><rect x="8" y="6" width="8" height="3.5" rx="1"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 17h.01M12 17h.01M15.5 17h.01"/></svg></span>
+      <span class="brand-type"><span class="brand-name">송산기</span><span class="brand-tag">SONG&#39;S CALCULATOR</span></span>
+    </a>
+  </div>
+</header>
+
+<main class="shell" id="top">
+  <section class="hero" aria-labelledby="mainTitle">
+    <div>
+      <p class="hero-kicker"><span class="kicker-line"></span>월급날, 돈이 모이는 루틴</p>
+      <h1 id="mainTitle">월급 관리<br><em>금액별 자동 계산기</em></h1>
+      <p class="creator-line">만든 사람 <strong>실버송</strong></p><p class="hero-sub">매달 들어오는 월급을 어떻게 나눌지 고민됐다면?<br>내 월급 기준으로 배분하고, 미래에 모일 원금까지 확인해 보세요.</p>
+    </div>
+    <div class="hero-notes" aria-label="계산기 주요 특징"><span>✓ 내 월급 기준</span><span>✓ 즉시 자동 계산</span><span>✓ 저장 없음</span></div>
+  </section>
+
+  <section class="workspace" aria-label="월급 입력과 계산 결과">
+    <div class="panel input-card">
+      <div class="section-eyebrow"><span class="step-num">01</span> 내 월급 입력</div>
+      <h2>이번 달 월급은 얼마인가요?</h2>
+      <p class="card-desc">매달 통장에 들어오는 세후 금액을 입력해 주세요.</p>
+      <label class="field-label" for="salaryInput"><span>나의 세후 월급</span><small>만원 단위</small></label>
+      <div class="salary-field"><input id="salaryInput" aria-describedby="salaryHelp salaryError" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="300" maxlength="7" enterkeyhint="done" spellcheck="false"><span class="unit">만원</span></div>
+      <p class="input-hint" id="salaryHelp"><span id="exampleNote">예시 300만원이에요. 내 월급으로 바꿔보세요.</span><span id="integerNote" hidden>만원 미만은 빼고 숫자만 입력해 주세요.</span></p><p id="salaryError" class="error-message" role="alert" hidden></p>
+      <div class="presets" aria-label="월급 빠른 선택">
+        <button class="preset" type="button" data-salary="200" aria-pressed="false">200만원</button>
+        <button class="preset" type="button" data-salary="250" aria-pressed="false">250만원</button>
+        <button class="preset" type="button" data-salary="300" aria-pressed="true">300만원</button>
+        <button class="preset" type="button" data-salary="400" aria-pressed="false">400만원</button>
+      </div>
+      <hr class="input-divider">
+      <div class="loan-toggle-row">
+        <div><p class="loan-title">매달 갚는 대출이 있나요?</p><p class="loan-desc">원금과 이자를 합친 월 상환액을 반영해요.</p></div>
+        <label class="switch"><span class="visually-hidden">대출 상환액 입력 사용</span><input id="loanToggle" type="checkbox" role="switch" aria-controls="loanEntry" aria-expanded="false"><span class="switch-track" aria-hidden="true"></span></label>
+      </div>
+      <div class="loan-entry" id="loanEntry" hidden>
+        <label class="field-label" for="loanInput"><span>매달 갚는 대출 상환액</span><small>원금 + 이자</small></label>
+        <div class="salary-field loan-field"><input id="loanInput" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="0" maxlength="7" enterkeyhint="done" spellcheck="false" aria-describedby="loanHelp loanError"><span class="unit">만원</span></div>
+        <p class="input-hint loan-help" id="loanHelp">총 대출 잔액이 아니라 한 달에 갚는 금액이에요. 매달 50만원을 갚는다면 50을 입력해 주세요.</p><p id="loanError" class="error-message" role="alert" hidden></p>
+      </div>
+      <details class="how-it-works"><summary>대출 상환액은 어떻게 반영되나요?</summary><p>월급에서 월 대출 상환액을 먼저 빼고, 남은 돈을 저축 40%·비상금 4%·문화비 6%·생활비 50%로 나눠요. 생활비를 포함한 네 항목이 모두 같은 비율로 줄어듭니다. 예를 들어 월급 300만원, 월 상환액 50만원이면 남은 250만원을 저축 100만원·비상금 10만원·문화비 15만원·생활비 125만원으로 배분해요. 아래 수동 계산에서는 이 네 비율을 직접 바꿀 수 있어요. 각 항목은 배분 후 만원 미만을 버려 표시합니다.</p></details>
+      <div class="form-actions"><span class="inline-validation" id="validationMessage" role="status" aria-live="polite"></span><button type="button" class="reset-btn" id="resetBtn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2-5.7M3 4v6h6"/></svg>입력 초기화</button></div>
+    </div>
+
+    <aside class="panel summary-card" aria-labelledby="overviewTitle">
+      <div class="summary-head"><strong id="overviewTitle">한 달의 돈 흐름</strong><span class="live-indicator">실시간 계산</span></div>
+      <p class="summary-caption"><span id="exampleBadge" class="example-badge">예시</span> <span id="salaryMini">월급 300만원 기준 · 나의 작은 계획</span></p>
+      <div id="summaryValues"><div class="ring-area">
+        <div class="ring" id="ringChart" role="img" aria-label="월급 배분 도넛 차트"><div class="ring-center"><strong id="saveRatio">44%</strong><small>저축 + 비상금</small></div></div>
+        <div class="summary-metric"><span class="metric-label">매달 미래를 위해<br>모으는 돈</span><strong class="metric-value"><span id="monthlySaving">132</span><small>만원</small></strong><p>저축과 비상금을 합한 금액</p></div>
+      </div>
+      <div class="summary-bottom"><span id="remainderLabel">배분 후 남는 금액</span><strong id="remainderValue">0만원</strong></div>
+      <div class="warning" id="loanWarning" role="status" hidden></div>
+      <p class="summary-note">이자·투자 수익은 포함하지 않아요. 금액은 만원 미만을 버려 표시합니다.</p></div><div id="summaryEmpty" class="summary-empty" hidden><span aria-hidden="true">₩</span><strong id="summaryEmptyHeading">내 월급을 입력하면</strong><p id="summaryEmptyText">월급 배분과 미래의 원금을 바로 계산해 드려요.</p></div>
+    </aside>
+  </section>
+
+  <div class="auto-guide">
+    <div><strong>자동 계산은 대출을 갚고 남은 돈을 나눠요.</strong><p>저축 40% · 비상금 4% · 문화비 6% · 생활비 50%</p><span>생활비를 포함한 네 항목이 같은 비율로 줄어들어요. 내 상황에 맞는 비율은 아래에서 직접 정할 수 있어요.</span></div>
+    <a class="manual-link" href="#manualCalculator">내 비율로 직접 계산하기 <span aria-hidden="true">↓</span></a>
+  </div>
+
+  <div id="results"><section class="lower-section" aria-labelledby="breakdownTitle">
+    <div class="section-heading"><div><div class="section-eyebrow"><span class="step-num">02</span> 자동 계산 결과</div><h2 id="breakdownTitle">쓸 돈과 모을 돈, 따로 챙겨요.</h2><p class="section-intro">기본 비율과 월 대출 상환액을 반영한 월급 관리 예시예요.</p></div><div class="section-side-note">금액은 만원 단위 · 개인 상황에 맞게 조정하세요</div></div>
+    <div class="ratio-track" id="ratioTrack" role="img" aria-label="항목별 월급 배분 비율"><span class="ratio-segment savings-bg" id="barSavings" style="width:40%"></span><span class="ratio-segment emergency-bg" id="barEmergency" style="width:4%"></span><span class="ratio-segment culture-bg" id="barCulture" style="width:6%"></span><span class="ratio-segment living-bg" id="barLiving" style="width:50%"></span><span class="ratio-segment loan-bg" id="barLoan" style="width:0%"></span><span class="ratio-segment remaining-bg" id="barRemaining" style="width:0%"></span></div>
+    <div class="ratio-legend" aria-label="배분 범례"><span><i class="legend-dot savings-bg"></i>저축</span><span><i class="legend-dot emergency-bg"></i>비상금</span><span><i class="legend-dot culture-bg"></i>문화비</span><span><i class="legend-dot living-bg"></i>생활비</span><span id="loanLegend" hidden><i class="legend-dot loan-bg"></i>대출 상환</span><span id="remainingLegend" hidden><i class="legend-dot remaining-bg"></i>잔액</span></div>
+    <div class="allocation-grid">
+      <article class="allocation-card">
+        <div class="allocation-top"><span class="allocation-icon icon-savings"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M3 12h18"/><path d="M12 12v3"/></svg></span><span class="allocation-percent" id="savingsPercent">40%</span></div>
+        <h3>저축</h3><div class="allocation-amount"><span id="savingsAmount">120</span><small>만원</small></div><p class="allocation-description">적금부터 주식 투자까지,<br>미래를 위해 차곡차곡.</p><span class="allocation-footer">기본 배분 비율 40%</span>
+      </article>
+      <article class="allocation-card">
+        <div class="allocation-top"><span class="allocation-icon icon-emergency"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M12 8v5M12 16h.01"/></svg></span><span class="allocation-percent" id="emergencyPercent">4%</span></div>
+        <h3>비상금</h3><div class="allocation-amount"><span id="emergencyAmount">12</span><small>만원</small></div><p class="allocation-description">갑작스러운 지출에 대비해<br>든든하게 챙겨요.</p><span class="allocation-footer">기본 배분 비율 4%</span>
+      </article>
+      <article class="allocation-card">
+        <div class="allocation-top"><span class="allocation-icon icon-culture"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 21-1.5-1.4C5.6 15.1 3 12.7 3 9.5A4.5 4.5 0 0 1 7.5 5c1.7 0 3.3.8 4.5 2.2C13.2 5.8 14.8 5 16.5 5A4.5 4.5 0 0 1 21 9.5c0 3.2-2.6 5.6-7.5 10.1L12 21Z"/></svg></span><span class="allocation-percent" id="culturePercent">6%</span></div>
+        <h3>문화비</h3><div class="allocation-amount"><span id="cultureAmount">18</span><small>만원</small></div><p class="allocation-description">쇼핑과 취미, 친구와의 약속.<br>작은 즐거움도 중요하니까.</p><span class="allocation-footer">기본 배분 비율 6%</span>
+      </article>
+      <article class="allocation-card">
+        <div class="allocation-top"><span class="allocation-icon icon-living"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z"/><path d="M9 21v-8h6v8"/></svg></span><span class="allocation-percent" id="livingPercent">50%</span></div>
+        <h3>생활비</h3><div class="allocation-amount"><span id="livingAmount">150</span><small>만원</small></div><p class="allocation-description">월세·공과금·매일의 식비.<br>생활에 필요한 지출이에요.</p><span class="allocation-footer">기본 배분 비율 50%</span>
+      </article>
+    </div>
+    <p class="rounding-note">카드 위쪽 비율은 전체 월급에서 차지하는 비중이며, 만원 미만을 버리기 전 기준이에요. 그래프와 미래 원금은 화면에 표시된 금액을 기준으로 계산해요.</p><div class="extra-note" id="allocationFootnote"><span id="loanNote" hidden>대출 상환: <strong id="loanAmount">0만원</strong></span><span>만원 미만 버림 후 남은 금액: <strong id="leftoverAmount">0만원</strong></span></div>
+  </section>
+
+  <section class="lower-section" aria-labelledby="futureTitle">
+    <div class="section-heading"><div><div class="section-eyebrow"><span class="step-num">03</span> 이 루틴을 이어간다면</div><h2 id="futureTitle">오늘의 월급이 미래의 목돈으로.</h2><p class="section-intro">같은 금액을 꾸준히 모았을 때의 원금을 계산해요.</p></div></div>
+    <div class="future-card">
+      <div class="future-copy"><div class="section-eyebrow">미래의 내 통장</div><p class="future-intro">매달 저축과 비상금을 일정하게 쌓아간다면<br>몇 년 뒤 얼마가 모일까요?</p><div class="term-switch" role="group" aria-label="계산 기간 선택"><button class="term-btn" type="button" data-years="1" aria-pressed="false">1년</button><button class="term-btn" type="button" data-years="2" aria-pressed="false">2년</button><button class="term-btn" type="button" data-years="3" aria-pressed="false">3년</button><button class="term-btn" type="button" data-years="4" aria-pressed="false">4년</button><button class="term-btn" type="button" data-years="5" aria-pressed="true">5년</button></div><p class="projection-disclaimer">월급·월 상환액·배분액이 계속 같다고 가정합니다. 비상금은 쓰지 않고 보관한 금액이며, 이자·투자 수익은 계산에 넣지 않았어요. 대출 상환액과 배분 후 남은 금액도 포함하지 않습니다.</p></div>
+      <div class="future-amount-area"><span class="future-label" id="futureLabel">5년 뒤, 저축 + 비상금</span><div class="future-total"><span id="futureTotal">7,920</span><small>만원</small></div><div class="future-components"><div><span>저축·투자 원금</span><strong id="futureSavings">7,200만원</strong></div><div><span>비상금</span><strong id="futureEmergency">720만원</strong></div></div></div>
+    </div>
+    <div id="yearOverview" class="year-overview" aria-label="1년부터 5년까지 예상 원금"></div><div class="action-line"><button class="copy-btn" type="button" id="copyButton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>내 월급 루틴 복사하기</button><span class="action-note">나만의 계산 결과를 간단히 복사할 수 있어요.</span></div>
+    <div id="copyStatus" class="copy-status" role="status" aria-live="polite"></div><div id="copyFallback" class="copy-fallback" hidden><label for="copyText">아래 결과를 길게 눌러 복사해 주세요.</label><textarea id="copyText" readonly rows="10"></textarea></div>
+  </section>
+</div>
+  <section class="lower-section manual-section" id="manualCalculator" aria-labelledby="manualTitle">
+    <div class="section-heading"><div><div class="section-eyebrow"><span class="step-num">04</span> 내 비율로 직접 계산</div><h2 id="manualTitle">내 생활에 맞게, 비율을 바꿔보세요.</h2><p class="section-intro">저축·비상금·문화비·생활비를 원하는 비율로 정하면, 수동 계산 결과가 아래에 따로 나와요.</p></div></div>
+    <div class="panel manual-panel">
+      <div class="manual-rule"><strong>수동 계산은 대출을 갚고 남은 돈이 100%예요.</strong><p>위에서 입력한 월급과 월 상환액을 그대로 사용해요. 생활비도 자유롭게 조정할 수 있어요.</p></div>
+      <dl class="manual-basis"><div><dt>세후 월급</dt><dd id="manualSalary">300만원</dd></div><div><dt>− 월 대출 상환액</dt><dd id="manualRepayment">0만원</dd></div><div class="manual-basis-total"><dt>= 직접 배분할 금액</dt><dd id="manualAvailable">300만원</dd></div></dl>
+      <form id="manualForm" novalidate>
+        <fieldset class="manual-fields"><legend class="visually-hidden">수동 배분 비율 입력</legend>
+          <div class="manual-field"><label for="manualSaving"><i class="legend-dot savings-bg" aria-hidden="true"></i>저축 비율</label><div class="manual-input"><input id="manualSaving" type="number" min="0" max="100" step="0.1" inputmode="decimal" value="40" required aria-describedby="manualRatioHelp manualRatioMessage"><span>%</span></div></div>
+          <div class="manual-field"><label for="manualEmergency"><i class="legend-dot emergency-bg" aria-hidden="true"></i>비상금 비율</label><div class="manual-input"><input id="manualEmergency" type="number" min="0" max="100" step="0.1" inputmode="decimal" value="4" required aria-describedby="manualRatioHelp manualRatioMessage"><span>%</span></div></div>
+          <div class="manual-field"><label for="manualCulture"><i class="legend-dot culture-bg" aria-hidden="true"></i>문화비 비율</label><div class="manual-input"><input id="manualCulture" type="number" min="0" max="100" step="0.1" inputmode="decimal" value="6" required aria-describedby="manualRatioHelp manualRatioMessage"><span>%</span></div></div>
+          <div class="manual-field"><label for="manualLiving"><i class="legend-dot living-bg" aria-hidden="true"></i>생활비 비율</label><div class="manual-input"><input id="manualLiving" type="number" min="0" max="100" step="0.1" inputmode="decimal" value="50" required aria-describedby="manualRatioHelp manualRatioMessage"><span>%</span></div></div>
+        </fieldset>
+        <p class="manual-help" id="manualRatioHelp">각 비율은 0~100%, 소수점 한 자리까지 입력할 수 있어요. 네 항목의 합계를 100%로 맞춰 주세요.</p>
+        <div class="manual-status" id="manualRatioStatus" data-valid="true"><div><span>비율 합계</span><strong id="manualRatioTotal">100%</strong><span class="manual-total-target">/ 100%</span></div><p id="manualRatioMessage" role="status" aria-live="polite">합계가 100%예요. 버튼을 누르면 아래에 수동 계산 결과가 나와요.</p></div>
+        <div class="manual-actions"><button class="copy-btn" type="submit" id="manualCalculate">이 비율로 계산하기 <span aria-hidden="true">↓</span></button><button class="manual-reset" type="button" id="manualResetRatios">비율을 40·4·6·50%로 초기화</button></div>
+      </form>
+    </div>
+    <div id="manualResults" class="manual-results" hidden>
+      <div class="manual-result-heading"><span class="manual-badge">내가 정한 비율</span><h3 id="manualResultTitle" tabindex="-1">수동 계산 결과</h3><p id="manualResultBasis"></p></div>
+      <div class="manual-result-grid">
+        <article class="manual-result-card"><div><h4><i class="legend-dot savings-bg" aria-hidden="true"></i>저축</h4><span id="manualSavingPercent"></span></div><strong><span id="manualSavingAmount"></span><small>만원</small></strong></article>
+        <article class="manual-result-card"><div><h4><i class="legend-dot emergency-bg" aria-hidden="true"></i>비상금</h4><span id="manualEmergencyPercent"></span></div><strong><span id="manualEmergencyAmount"></span><small>만원</small></strong></article>
+        <article class="manual-result-card"><div><h4><i class="legend-dot culture-bg" aria-hidden="true"></i>문화비</h4><span id="manualCulturePercent"></span></div><strong><span id="manualCultureAmount"></span><small>만원</small></strong></article>
+        <article class="manual-result-card"><div><h4><i class="legend-dot living-bg" aria-hidden="true"></i>생활비</h4><span id="manualLivingPercent"></span></div><strong><span id="manualLivingAmount"></span><small>만원</small></strong></article>
+      </div>
+      <p class="rounding-note">위 비율은 대출 상환 후 남은 금액 기준이에요. 각 금액은 만원 미만을 버려 표시해요.</p>
+      <dl class="manual-check"><div><dt>월 대출 상환액</dt><dd id="manualResultLoan"></dd></div><div><dt>만원 미만 버림 후 남은 금액</dt><dd id="manualRemainder"></dd></div><div><dt>배분액 + 상환액 + 남은 금액</dt><dd id="manualCheckTotal"></dd></div></dl>
+      <p class="warning" id="manualZeroNote" hidden>월급 전액을 대출 상환에 사용해 직접 배분할 금액이 0원이에요.</p>
+      <div class="manual-outlook"><div><span class="manual-outlook-label">매달 저축 + 비상금</span><strong id="manualMonthlySaved"></strong><p>내가 정한 비율로 모으는 돈</p></div><div><label class="manual-outlook-label" for="manualYears"><select id="manualYears"><option value="1">1년</option><option value="2">2년</option><option value="3">3년</option><option value="4">4년</option><option value="5" selected>5년</option></select> 뒤, 저축 + 비상금 원금</label><strong id="manualFutureTotal"></strong><p id="manualFutureBreakdown"></p></div></div>
+      <p class="projection-disclaimer">월급·월 상환액·배분 비율이 계속 같고 비상금을 쓰지 않는다고 가정한 원금이에요. 이자·투자 수익·대출 상환액·배분 후 남은 금액은 포함하지 않아요.</p>
+      <div class="action-line"><button class="copy-btn" type="button" id="manualCopyButton">수동 계산 결과 복사하기</button></div>
+      <div id="manualCopyStatus" class="copy-status" role="status" aria-live="polite"></div><div id="manualCopyFallback" class="copy-fallback" hidden><label for="manualCopyText">아래 수동 계산 결과를 길게 눌러 복사해 주세요.</label><textarea id="manualCopyText" readonly rows="12"></textarea></div>
+    </div>
+  </section>
+<p id="liveStatus" class="visually-hidden" role="status" aria-live="polite"></p><noscript><p class="warning">계산하려면 JavaScript를 켜 주세요. 현재 표시된 금액은 월급 300만원의 예시입니다.</p></noscript></main>
+<footer class="footer"><div class="shell footer-inner"><div><p class="footer-brand">송산기 · 월급 관리 금액별 자동 계산기</p><p class="footer-caption">저축 40% · 비상금 4% · 문화비 6% · 생활비 50%에서 시작하는 월급 관리 예시입니다.<br>입력값은 이 브라우저 화면에서만 계산하며 서버에 전송하거나 저장하지 않아요. 새로고침하면 300만원 예시로 돌아갑니다. 결과 복사는 버튼을 누를 때만 실행됩니다.</p></div></div></footer>
+
+<script type="module" src="./app.mjs?v=5"></script>
+</body>
+</html>
