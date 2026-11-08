@@ -1,5 +1,5 @@
-import { calculateBudget, parseAmount } from './calculator.mjs?v=5';
-import { setupManualCalculator } from './manual.mjs?v=5';
+import { calculateBudget, parseAmount } from './calculator.mjs?v=6';
+import { setupManualCalculator } from './manual.mjs?v=6';
 const $=id=>document.getElementById(id), salaryInput=$('salaryInput'), loanInput=$('loanInput'), loanToggle=$('loanToggle');
 const presets=[...document.querySelectorAll('[data-salary]')], terms=[...document.querySelectorAll('[data-years]')];
 const nf=new Intl.NumberFormat('ko-KR'), pf=new Intl.NumberFormat('ko-KR',{maximumFractionDigits:1});
@@ -55,6 +55,41 @@ $('copyButton').addEventListener('click',async()=>{
   try{await navigator.clipboard.writeText(text);set('copyStatus','계산 결과가 복사됐어요.');}
   catch{$('copyText').value=text;$('copyFallback').hidden=false;set('copyStatus','자동 복사가 제한된 브라우저예요. 아래 결과를 직접 복사할 수 있어요.');}
 });
+// 입력값은 이 기기의 브라우저(localStorage)에만 저장돼요. 서버로 보내지 않고, 다른 사람의 브라우저에는 보이지 않아요.
+const STORE_KEY='songsangi:my-settings:v1';
+const manualFieldIds=['manualSaving','manualEmergency','manualCulture','manualLiving'];
+let restoring=false;
+function saveState(){
+  if(restoring)return;
+  const state={salary:salaryInput.value,loanOn:loanToggle.checked,loan:loanInput.value,years,ratios:manualFieldIds.map(id=>$(id).value),manualYears:$('manualYears').value,manualShown:!$('manualResults').hidden};
+  try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch{}
+}
+function loadState(){try{const raw=localStorage.getItem(STORE_KEY);return raw?JSON.parse(raw):null;}catch{return null;}}
+function clearState(){try{localStorage.removeItem(STORE_KEY);}catch{}}
 function restoreExample(){salaryInput.value='300';loanInput.value='0';loanToggle.checked=false;years=5;$('loanEntry').hidden=true;loanToggle.setAttribute('aria-expanded','false');$('exampleNote').hidden=false;$('exampleBadge').hidden=false;$('integerNote').hidden=true;manual.reset();clearCopy();render();}
-// Values stay in page memory. A reload/history restoration resets to the example.
-window.addEventListener('pageshow',restoreExample);restoreExample();
+function restoreSaved(){
+  const s=loadState();
+  if(!s||typeof s!=='object'){restoreExample();return;}
+  restoring=true;
+  try{
+    manual.reset();
+    salaryInput.value=String(s.salary??'');loanInput.value=String(s.loan??'0');loanToggle.checked=!!s.loanOn;
+    years=[1,2,3,4,5].includes(Number(s.years))?Number(s.years):5;
+    $('loanEntry').hidden=!loanToggle.checked;loanToggle.setAttribute('aria-expanded',String(loanToggle.checked));
+    if(Array.isArray(s.ratios))manualFieldIds.forEach((id,i)=>{if(s.ratios[i]!=null)$(id).value=String(s.ratios[i]);});
+    if(['1','2','3','4','5'].includes(String(s.manualYears)))$('manualYears').value=String(s.manualYears);
+    edited();render();
+    if(s.manualShown)manual.calculate(false);
+  }finally{restoring=false;}
+}
+[salaryInput,loanInput].forEach(input=>input.addEventListener('input',saveState));
+loanToggle.addEventListener('change',saveState);
+presets.forEach(b=>b.addEventListener('click',saveState));
+terms.forEach(b=>b.addEventListener('click',saveState));
+manualFieldIds.forEach(id=>$(id).addEventListener('input',saveState));
+$('manualYears').addEventListener('change',saveState);
+$('manualForm').addEventListener('submit',()=>setTimeout(saveState,0));
+$('manualResetRatios').addEventListener('click',saveState);
+// '입력 초기화'를 누르면 이 기기에 저장된 값도 지워요. 다음에 열면 300만원 예시로 시작해요.
+$('resetBtn').addEventListener('click',clearState);
+window.addEventListener('pageshow',restoreSaved);restoreSaved();

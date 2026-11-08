@@ -1,4 +1,4 @@
-import { calculateManualBudget, parseAmount, parseRatio } from './calculator.mjs?v=5';
+import { calculateManualBudget, parseAmount, parseRatio } from './calculator.mjs?v=6';
 
 export function setupManualCalculator() {
   const $ = id => document.getElementById(id);
@@ -78,15 +78,21 @@ export function setupManualCalculator() {
   }
 
   fields.forEach(field => field.addEventListener('input', update));
-  $('manualForm').addEventListener('submit', event => {
-    event.preventDefault();
-    if (!update()) return;
+  function calculate(scroll = true) {
+    if (!update()) return false;
     const { salary, repayment, ratios } = readInputs();
     latest = calculateManualBudget(salary, repayment, ratios);
     clearCopy();
     renderResults();
-    $('manualResultTitle').focus({ preventScroll: true });
-    $('manualResults').scrollIntoView({ behavior: 'auto', block: 'start' });
+    if (scroll) {
+      $('manualResultTitle').focus({ preventScroll: true });
+      $('manualResults').scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+    return true;
+  }
+  $('manualForm').addEventListener('submit', event => {
+    event.preventDefault();
+    calculate();
   });
   $('manualResetRatios').addEventListener('click', () => {
     fields.forEach((field, i) => { field.value = String(defaults[i]); });
@@ -123,5 +129,5 @@ export function setupManualCalculator() {
     lastInputKey = '';
     update();
   }
-  return { update, reset };
+  return { update, reset, calculate };
 }
